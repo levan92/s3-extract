@@ -179,6 +179,8 @@ if __name__ == "__main__":
         "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY"),
         "CERT_PATH": CERT_PATH if CERT_PATH else None,
         "CERT_DL_URL": os.environ.get("CERT_DL_URL"),
+        "SIGNATURE_VERSION": os.environ.get("SIGNATURE_VERSION"),
+        "REGION_NAME": os.environ.get("REGION_NAME"),
     }
     if s3_info["CERT_PATH"]:
         if not os.path.exists(s3_info["CERT_PATH"]) and s3_info["CERT_DL_URL"]:
