@@ -18,7 +18,9 @@ Additionally, these information needed for ClearML remote execution can also be 
 - `DEFAULT_DOCKER_IMG`
 - `DEFAULT_QUEUE`
 
-For those not familiar, environment variables can be set through `export <NAME>=<VALUE>` in terminal, or can be set in `~/.bashrc` as well (for more permanence).
+For those not familiar, environment variables can be set through various ways, some being: 
+- `export <NAME>=<VALUE>` in terminal
+- can be set in `~/.bashrc` as well for more permanence
 
 ## Usage
 
