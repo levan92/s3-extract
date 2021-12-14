@@ -22,6 +22,8 @@ For those not familiar, environment variables can be set through various ways, s
 - `export <NAME>=<VALUE>` in terminal
 - can be set in `~/.bashrc` as well for more permanence
 
+Iteratively extracting a folder of zips/tars is supported as well, through `--src-is-dir` flag.
+
 ## Usage
 
 ```
