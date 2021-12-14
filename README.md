@@ -35,3 +35,9 @@ optional arguments:
                         Base docker image to pull for ClearML remote execution
   --queue QUEUE         ClearML remote execution queue
 ```
+
+Example usage:
+
+```bash
+python run.py my-bucket dataset/coco/images.tar dataset/coco/ --verbose --remote --clml-proj coco --clml-task-name coco_extraction --docker-img nvidia/cuda:11.4.2-devel-ubuntu20.04 --queue 1xGPU
+```
