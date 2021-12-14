@@ -163,26 +163,9 @@ if __name__ == "__main__":
         "--clml-task-type",
         default="data_processing",
         help="ClearML Task Type, e.g. training, testing, inference, etc",
-        choices=[
-            "training",
-            "testing",
-            "inference",
-            "data_processing",
-            "application",
-            "monitor",
-            "controller",
-            "optimizer",
-            "service",
-            "qc",
-            "custom",
-        ],
     )
-    ap.add_argument(
-        "--docker-img",
-        default="harbor.dsta.ai/public/detectron2:best-val-steps-nosavepred",
-        help="Base docker image to pull",
-    )
-    ap.add_argument("--queue", default="queue-1xV100-64ram", help="ClearML Queue")
+    ap.add_argument("--docker-img", help="Base docker image to pull for ClearML remote execution")
+    ap.add_argument("--queue", help="ClearML remote execution queue")
     args = ap.parse_args()
 
     # Sorting out s3 information
@@ -217,10 +200,13 @@ if __name__ == "__main__":
                 task_type=args.clml_task_type,
                 output_uri=None,
             )
+            docker_img = args.docker_img or os.environ.get("DEFAULT_DOCKER_IMG")
             cl_task.set_base_docker(
-                f"{args.docker_img} --env GIT_SSL_NO_VERIFY=true --env AWS_ENDPOINT_URL={s3_info.get('AWS_ENDPOINT_URL')} --env AWS_ACCESS_KEY_ID={s3_info.get('AWS_ACCESS_KEY_ID')} --env AWS_SECRET_ACCESS_KEY={s3_info.get('AWS_SECRET_ACCESS_KEY')} --env CERT_PATH={s3_info.get('CERT_PATH')} --env CERT_DL_URL={s3_info.get('CERT_DL_URL')}"
+                f"{docker_img} --env GIT_SSL_NO_VERIFY=true --env AWS_ENDPOINT_URL={s3_info.get('AWS_ENDPOINT_URL')} --env AWS_ACCESS_KEY_ID={s3_info.get('AWS_ACCESS_KEY_ID')} --env AWS_SECRET_ACCESS_KEY={s3_info.get('AWS_SECRET_ACCESS_KEY')} --env CERT_PATH={s3_info.get('CERT_PATH')} --env CERT_DL_URL={s3_info.get('CERT_DL_URL')}"
             )
-            cl_task.execute_remotely(queue_name=args.queue, exit_process=True)
+            queue = args.queue or os.environ.get("DEFAULT_QUEUE")
+            assert queue, "Queue not given"
+            cl_task.execute_remotely(queue_name=queue, exit_process=True)
         else:
             from warnings import warn
 
