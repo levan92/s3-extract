@@ -55,5 +55,5 @@ optional arguments:
 Example usage:
 
 ```bash
-python run.py my-bucket dataset/coco/images.tar dataset/coco/ --verbose --remote --clml-proj coco --clml-task-name coco_extraction --docker-img nvidia/cuda:11.4.2-devel-ubuntu20.04 --queue 1xGPU
+python run.py my-bucket dataset/coco/images.tar dataset/coco/ --verbose --remote --clml-proj coco --clml-task-name coco_extraction --docker-img ubuntu/20.04 --queue 1xGPU
 ```
