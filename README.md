@@ -6,6 +6,18 @@ Extract an archive file (zip file or tar file) stored on AWS S3.
 
 Downloads archive from S3 into memory, then extract and re-upload to given destination. 
 
+The following S3 information is expected to be given as Environment Variables:
+
+- AWS_ENDPOINT_URL
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- CERT_PATH (optional)
+- CERT_DL_URL (optional)
+
+Additionally, these information needed for ClearML remote execution can also be given as Env Variable (optional, args will override env var):
+- DEFAULT_DOCKER_IMG
+- DEFAULT_QUEUE
+
 ## Usage
 
 ```
