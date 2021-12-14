@@ -1,9 +1,9 @@
 try:
     from clearml import Task
-
     CLEARML_PRESENT = True
 except ImportError:
     CLEARML_PRESENT = False
+    print('ClearML not installed')
 
 import os
 import zipfile, tarfile
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     }
     if s3_info["CERT_PATH"]:
         if not os.path.exists(s3_info["CERT_PATH"]) and s3_info["CERT_DL_URL"]:
-            import wget
+            from util import wget
             import ssl
 
             ssl._create_default_https_context = ssl._create_unverified_context
@@ -201,11 +201,13 @@ if __name__ == "__main__":
                 output_uri=None,
             )
             docker_img = args.docker_img or os.environ.get("DEFAULT_DOCKER_IMG")
+            print(f'Running with docker images: {docker_img}')
             cl_task.set_base_docker(
                 f"{docker_img} --env GIT_SSL_NO_VERIFY=true --env AWS_ENDPOINT_URL={s3_info.get('AWS_ENDPOINT_URL')} --env AWS_ACCESS_KEY_ID={s3_info.get('AWS_ACCESS_KEY_ID')} --env AWS_SECRET_ACCESS_KEY={s3_info.get('AWS_SECRET_ACCESS_KEY')} --env CERT_PATH={s3_info.get('CERT_PATH')} --env CERT_DL_URL={s3_info.get('CERT_DL_URL')}"
             )
             queue = args.queue or os.environ.get("DEFAULT_QUEUE")
             assert queue, "Queue not given"
+            print(f'at queue: {queue}')
             cl_task.execute_remotely(queue_name=queue, exit_process=True)
         else:
             from warnings import warn
