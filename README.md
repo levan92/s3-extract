@@ -14,7 +14,7 @@ The following S3 information is expected to be given as Environment Variables:
 - `CERT_PATH` (optional)
 - `CERT_DL_URL` (optional)
 - `SIGNATURE_VERSION` (optional, defaults to "s3v4")
-- `REGION_NAME` (optional, defaeults to "us-east-1")
+- `REGION_NAME` (optional, defaults to "us-east-1")
 
 Additionally, these information needed for ClearML remote execution can also be given as Env Variable (optional, args will override env var):
 - `DEFAULT_DOCKER_IMG`
